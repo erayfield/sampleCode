@@ -1,0 +1,31 @@
+query which will display projects, actions, and futher opportunites with the client
+
+SELECT 
+  `supplyletter`.`gbc_id`,
+  `projects`.`recv_cust`,
+  `projects`.`rec_country`,
+  `projects`.`project_name`,
+  `opportunities`.`est_transfer_date`,
+  `supplyletter`.`supplier_name`,
+  `supplyletter`.`sending_cust`,
+  `supplyletter`.`sending_cust`,
+  `supplyletter`.`rec_cust`,
+  `supplyletter`.`rec_region`,
+  `supplyletter`.`rec_region`,
+  `supplyletter`.`sending_region`,
+  `projects`.`status`,
+  `projects`.`last_track_date`,
+  `opportunities`.`project_name`,
+  `actionsneeded`.`action_needed_code`,
+  `actionsneeded`.`action_needed_due_date`,
+  `actionsneeded`.`status`,
+  `opportunities`.`status`
+FROM
+  `projects`
+  INNER JOIN `actionsneeded` ON (`projects`.`gbc_id` = `actionsneeded`.`gbc_id`)
+  INNER JOIN `opportunities` ON (`projects`.`gbc_id` = `opportunities`.`gbc_id`)
+  AND (`projects`.`project_name` = `opportunities`.`project_name`)
+  INNER JOIN `supplyletter` ON (`projects`.`gbc_id` = `supplyletter`.`gbc_id`)
+  
+  
+  

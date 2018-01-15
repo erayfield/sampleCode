@@ -1,0 +1,24 @@
+deals with inventory display of medications
+SELECT 
+  `inventory_item`.`description`,
+  `inventory_lot`.`expiration_dttm`,
+  `inventory_lot`.`lot_number`,
+  `inventory_pending_actions`.`quantity`,
+  `inventory_pending_actions`.`status_di`,
+  `inventory_product`.`description`,
+  `inventory_product`.`manufacturer_code`,
+  `inventory_quantity`.`site_id`,
+  `inventory_package`.`base_quantity`
+FROM
+  `inventory_lot`
+  INNER JOIN `inventory_item` ON (`inventory_lot`.`inventory_item_id` = `inventory_item`.`inventory_item_id`)
+  INNER JOIN `inventory_pending_actions` ON (`inventory_item`.`inventory_item_id` = `inventory_pending_actions`.`inventory_item_id`)
+  INNER JOIN `inventory_product` ON (`inventory_item`.`inventory_item_id` = `inventory_product`.`inventory_item_id`)
+  INNER JOIN `inventory_quantity` ON (`inventory_item`.`inventory_item_id` = `inventory_quantity`.`inventory_item_id`),
+  `med_formulation_has_med_product`
+  INNER JOIN `med_formulation` ON (`med_formulation_has_med_product`.`med_formulation_id` = `med_formulation`.`med_formulation_id`)
+  INNER JOIN `med_formulation_has_med_warning_label` ON (`med_formulation`.`med_formulation_id` = `med_formulation_has_med_warning_label`.`med_formulation_id`)
+  INNER JOIN `med_generic` ON (`med_formulation`.`med_generic_id` = `med_generic`.`med_generic_id`)
+  INNER JOIN `med_generic_has_med_category` ON (`med_generic_has_med_category`.`med_generic_id` = `med_generic`.`med_generic_id`)
+  INNER JOIN `med_category` ON (`med_generic_has_med_category`.`med_category_id` = `med_category`.`med_category_id`),
+  `inventory_package`

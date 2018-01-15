@@ -1,0 +1,20 @@
+deals with symptoms and protocol for DTP VACCINATIONS
+SELECT 
+  `element`.`system_definition` AS `ELMSYSDEF`,
+  `element`.`description`,
+  `element_has_symptom`.`critical_severity_def`,
+  `element_has_protocol`.`protocol_id`,
+  `element_has_protocol`.`sequence`,
+  `protocol`.`short_description`,
+  `protocol`.`description`,
+  `symptom`.`description`,
+  `symptom`.`system_definition` AS `SYSDEF`,
+  `element`.`element_id`
+FROM
+  `element_has_protocol`
+  INNER JOIN `element` ON (`element_has_protocol`.`element_id` = `element`.`element_id`)
+  INNER JOIN `element_has_symptom` ON (`element`.`element_id` = `element_has_symptom`.`element_id`)
+  INNER JOIN `symptom` ON (`element_has_symptom`.`symptom_id` = `symptom`.`symptom_id`)
+  INNER JOIN `protocol` ON (`element_has_protocol`.`protocol_id` = `protocol`.`protocol_id`)
+WHERE
+  `element`.`system_definition` = 'DTP VACCINATIONS'
